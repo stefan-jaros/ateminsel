@@ -1,3 +1,17 @@
+// Theme toggle
+const themeToggle = document.querySelector('.theme-toggle');
+const savedTheme = localStorage.getItem('theme');
+
+if (savedTheme === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+}
+
+themeToggle.addEventListener('click', () => {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    localStorage.setItem('theme', isDark ? 'light' : 'dark');
+    location.reload();
+});
+
 // Mobile navigation toggle
 const toggle = document.querySelector('.nav-toggle');
 const links = document.querySelector('.nav-links');
@@ -15,8 +29,63 @@ document.querySelectorAll('.nav-links a').forEach(link => {
     });
 });
 
+// Scroll-Animation
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+            setTimeout(() => entry.target.classList.add('visible'), i * 80);
+            observer.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// Kontaktformular
+const form = document.getElementById('kontakt-form');
+if (form) {
+    // Zeitstempel setzen beim Laden
+    form.querySelector('[name="_ts"]').value = Math.floor(Date.now() / 1000);
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const status = document.getElementById('form-status');
+        const btn = form.querySelector('button[type="submit"]');
+        btn.disabled = true;
+        btn.textContent = 'Wird gesendet...';
+        status.textContent = '';
+        status.className = 'form-status';
+
+        fetch(basePath + 'kontakt.php', {
+            method: 'POST',
+            body: new FormData(form)
+        })
+        .then(r => r.json())
+        .then(data => {
+            if (data.ok) {
+                status.textContent = 'Vielen Dank! Ihre Nachricht wurde gesendet.';
+                status.className = 'form-status success';
+                form.reset();
+                form.querySelector('[name="_ts"]').value = Math.floor(Date.now() / 1000);
+            } else {
+                status.textContent = data.fehler || 'Ein Fehler ist aufgetreten.';
+                status.className = 'form-status error';
+            }
+            btn.disabled = false;
+            btn.textContent = 'Nachricht senden';
+        })
+        .catch(() => {
+            status.textContent = 'Verbindungsfehler. Bitte versuchen Sie es telefonisch.';
+            status.className = 'form-status error';
+            btn.disabled = false;
+            btn.textContent = 'Nachricht senden';
+        });
+    });
+}
+
 // Kurse laden
-fetch('kurse.json')
+var basePath = document.querySelector('link[rel="stylesheet"]').href.replace('style.css', '');
+fetch(basePath + 'kurse.json')
     .then(r => r.json())
     .then(kurse => {
         const liste = document.getElementById('kurse-liste');
