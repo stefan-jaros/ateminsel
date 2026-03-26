@@ -121,7 +121,14 @@ img {
 .nav-links {
     display: flex;
     list-style: none;
-    gap: 32px;
+    gap: 24px;
+    margin-left: auto;
+    margin-right: 24px;
+}
+
+.lang-dropdown,
+.theme-toggle {
+    margin-left: 16px;
 }
 
 .nav-links a {
