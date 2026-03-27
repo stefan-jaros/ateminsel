@@ -46,9 +46,32 @@ langDropdown.querySelector('.lang-menu').addEventListener('click', (e) => {
     e.stopPropagation();
 });
 
-// Active nav link based on scroll position
+// Dragonfly navigation indicator
 const sections = document.querySelectorAll('section[id]');
 const navAnchors = document.querySelectorAll('.nav-links a[href^="#"]');
+const navEl = document.querySelector('.nav');
+const navLogo = document.querySelector('.nav-logo');
+
+// Create dragonfly element
+const libelle = document.createElement('img');
+libelle.src = '../img/libellen-logo.png';
+libelle.className = 'nav-libelle';
+libelle.alt = '';
+navEl.appendChild(libelle);
+
+function moveLibelle(target) {
+    const navRect = navEl.getBoundingClientRect();
+    const targetRect = target.getBoundingClientRect();
+    libelle.style.left = (targetRect.left - navRect.left + targetRect.width + 4) + 'px';
+    libelle.style.top = (targetRect.top - navRect.top + targetRect.height / 2 - 17) + 'px';
+}
+
+function moveLibelleToLogo() {
+    const navRect = navEl.getBoundingClientRect();
+    const logoRect = navLogo.getBoundingClientRect();
+    libelle.style.left = (logoRect.right - navRect.left + 6) + 'px';
+    libelle.style.top = (logoRect.top - navRect.top + logoRect.height / 2 - 17) + 'px';
+}
 
 function updateActiveNav() {
     const scrollY = window.scrollY + 100;
@@ -60,12 +83,32 @@ function updateActiveNav() {
         }
     });
 
+    let activeLink = null;
     navAnchors.forEach(a => {
-        a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+        const isActive = a.getAttribute('href') === '#' + current;
+        a.classList.toggle('active', isActive);
+        if (isActive) activeLink = a;
     });
+
+    if (activeLink) {
+        const navRect = navEl.getBoundingClientRect();
+        const linkRect = activeLink.getBoundingClientRect();
+        libelle.style.left = (linkRect.left - navRect.left - 30) + 'px';
+        libelle.style.top = (linkRect.top - navRect.top + linkRect.height / 2 - 17) + 'px';
+    } else {
+        moveLibelleToLogo();
+    }
 }
 
+// Initial position at logo (no transition)
+libelle.style.transition = 'none';
+moveLibelleToLogo();
+requestAnimationFrame(() => {
+    libelle.style.transition = '';
+});
+
 window.addEventListener('scroll', updateActiveNav);
+window.addEventListener('resize', () => { updateActiveNav(); });
 updateActiveNav();
 
 // Scroll-Animation

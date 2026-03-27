@@ -147,16 +147,14 @@ img {
     color: var(--text);
 }
 
-.nav-links a.active::before {
-    content: '';
+.nav-libelle {
     position: absolute;
-    left: -28px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 24px;
-    height: 24px;
-    background: url('img/libellen-logo.png') center/contain no-repeat;
+    width: 34px;
+    height: 34px;
     filter: saturate(2.2) brightness(0.55);
+    pointer-events: none;
+    transition: left 0.5s ease, top 0.5s ease;
+    z-index: 101;
 }
 
 .nav-toggle {
