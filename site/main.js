@@ -12,7 +12,7 @@ themeToggle.addEventListener('click', () => {
     location.reload();
 });
 
-// Hero breathing animation - on load and on logo click
+// Hero seed animation - on load and on logo click
 const hero = document.querySelector('.hero');
 hero.classList.add('animate');
 
