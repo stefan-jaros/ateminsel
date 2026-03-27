@@ -438,13 +438,9 @@ img {
 
 /* ── Video ───────────────────────────── */
 
-.section-video {
-    padding: 32px 0;
-}
-
 .video-container {
-    max-width: 500px;
-    margin: 0 auto;
+    max-width: 480px;
+    margin: 40px auto 0;
     text-align: center;
 }
 
