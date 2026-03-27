@@ -16,7 +16,7 @@
     --border: #e2e2e6;
     --radius: 12px;
     --transition: 0.3s ease;
-    --nav-bg: rgba(255, 255, 255, 0.85);
+    --nav-bg: rgba(245, 245, 247, 0.95);
 }
 
 [data-theme="dark"] {
