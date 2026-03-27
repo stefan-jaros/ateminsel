@@ -150,11 +150,11 @@ img {
 .nav-links a.active::before {
     content: '';
     position: absolute;
-    left: -38px;
+    left: -28px;
     top: 50%;
     transform: translateY(-50%);
-    width: 32px;
-    height: 32px;
+    width: 24px;
+    height: 24px;
     background: url('img/libellen-logo.png') center/contain no-repeat;
     filter: saturate(2.2) brightness(0.55);
 }
