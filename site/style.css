@@ -440,8 +440,8 @@ img {
 
 .video-container {
     max-width: 480px;
-    margin: 40px auto 0;
-    text-align: center;
+    margin: 40px 0 0;
+    text-align: left;
 }
 
 .video-label {
