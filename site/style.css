@@ -439,8 +439,9 @@ img {
 /* ── Video ───────────────────────────── */
 
 .video-container {
-    max-width: calc(50% - 10px);
-    margin: 40px 0 0;
+    max-width: 560px;
+    margin: 24px auto 40px;
+    text-align: center;
 }
 
 .video-label {
