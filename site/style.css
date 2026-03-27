@@ -150,12 +150,12 @@ img {
 .nav-links a.active::before {
     content: '';
     display: inline-block;
-    width: 16px;
-    height: 16px;
-    margin-right: 5px;
-    vertical-align: -2px;
+    width: 24px;
+    height: 24px;
+    margin-right: 6px;
+    vertical-align: -5px;
     background: url('img/libellen-logo.png') center/contain no-repeat;
-    opacity: 0.6;
+    opacity: 0.85;
 }
 
 .nav-toggle {
