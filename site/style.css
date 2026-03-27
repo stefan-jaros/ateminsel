@@ -202,13 +202,13 @@ img {
     will-change: transform;
 }
 
-@keyframes hero-breathe {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
+@keyframes hero-settle {
+    0% { transform: scale(1.06); }
+    100% { transform: scale(1); }
 }
 
 .hero.animate::before {
-    animation: hero-breathe 6s ease-in-out 1;
+    animation: hero-settle 4s ease-out 1 forwards;
 }
 
 @media (prefers-reduced-motion: reduce) {
