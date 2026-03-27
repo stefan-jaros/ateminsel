@@ -1,3 +1,7 @@
+// Always start at top on page load
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+window.scrollTo(0, 0);
+
 // Theme toggle
 const themeToggle = document.querySelector('.theme-toggle');
 const savedTheme = localStorage.getItem('theme');
