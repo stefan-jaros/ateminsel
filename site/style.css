@@ -197,19 +197,19 @@ img {
 .hero::before {
     content: '';
     position: absolute;
-    inset: -10px;
+    inset: -50px -5px -5px -5px;
     background: url('img/hero-bg.jpg') center/cover no-repeat;
-    animation: none;
+    transform: translateY(-45px);
     will-change: transform;
 }
 
-@keyframes hero-breathe {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
+@keyframes hero-fall {
+    0% { transform: translateY(-45px); }
+    100% { transform: translateY(0); }
 }
 
 .hero.animate::before {
-    animation: hero-breathe 6s ease-in-out 1;
+    animation: hero-fall 5s ease-out 1 forwards;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -218,6 +218,7 @@ img {
     }
     .hero::before {
         inset: 0;
+        transform: none;
     }
 }
 
