@@ -29,6 +29,23 @@ document.querySelectorAll('.nav-links a').forEach(link => {
     });
 });
 
+// Language dropdown toggle
+const langDropdown = document.querySelector('.lang-dropdown');
+const langBtn = document.querySelector('.lang-btn');
+
+langBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    langDropdown.classList.toggle('open');
+});
+
+document.addEventListener('click', () => {
+    langDropdown.classList.remove('open');
+});
+
+langDropdown.querySelector('.lang-menu').addEventListener('click', (e) => {
+    e.stopPropagation();
+});
+
 // Scroll-Animation
 const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry, i) => {

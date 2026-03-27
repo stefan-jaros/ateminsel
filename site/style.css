@@ -859,7 +859,7 @@ img {
     min-width: 120px;
 }
 
-.lang-dropdown:hover .lang-menu {
+.lang-dropdown.open .lang-menu {
     display: block;
 }
 
