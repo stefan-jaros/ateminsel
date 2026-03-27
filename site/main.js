@@ -46,6 +46,28 @@ langDropdown.querySelector('.lang-menu').addEventListener('click', (e) => {
     e.stopPropagation();
 });
 
+// Active nav link based on scroll position
+const sections = document.querySelectorAll('section[id]');
+const navAnchors = document.querySelectorAll('.nav-links a[href^="#"]');
+
+function updateActiveNav() {
+    const scrollY = window.scrollY + 100;
+    let current = '';
+
+    sections.forEach(section => {
+        if (scrollY >= section.offsetTop) {
+            current = section.getAttribute('id');
+        }
+    });
+
+    navAnchors.forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+}
+
+window.addEventListener('scroll', updateActiveNav);
+updateActiveNav();
+
 // Scroll-Animation
 const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry, i) => {
