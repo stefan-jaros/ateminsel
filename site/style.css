@@ -434,13 +434,28 @@ img {
     .weshalb-grid {
         grid-template-columns: 1fr;
     }
+    .weshalb-intro {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* ── Video ───────────────────────────── */
 
+.weshalb-intro {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.weshalb-intro .section-title,
+.weshalb-intro .section-sub {
+    margin-bottom: 12px;
+}
+
 .video-container {
-    max-width: 560px;
-    margin: 24px 0 40px;
+    max-width: 100%;
 }
 
 .video-label {
