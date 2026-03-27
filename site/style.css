@@ -121,7 +121,7 @@ img {
 .nav-links {
     display: flex;
     list-style: none;
-    gap: 32px;
+    gap: 36px;
     margin-left: auto;
     margin-right: 28px;
 }
@@ -136,8 +136,6 @@ img {
     font-size: 0.9rem;
     font-weight: 400;
     transition: color var(--transition);
-    position: relative;
-    padding-bottom: 10px;
 }
 
 .nav-links a:hover {
@@ -149,18 +147,15 @@ img {
     font-weight: 500;
 }
 
-.nav-libelle {
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    opacity: 0.55;
-    pointer-events: none;
-    transition: left 0.4s ease, opacity 0.3s ease;
-    filter: none;
-}
-
-[data-theme="dark"] .nav-libelle {
-    filter: brightness(1.3);
+.nav-links a.active::before {
+    content: '';
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+    vertical-align: -2px;
+    background: url('img/libellen-logo.png') center/contain no-repeat;
+    opacity: 0.6;
 }
 
 .nav-toggle {

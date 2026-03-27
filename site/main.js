@@ -46,30 +46,9 @@ langDropdown.querySelector('.lang-menu').addEventListener('click', (e) => {
     e.stopPropagation();
 });
 
-// Active nav link with dragonfly indicator
+// Active nav link based on scroll position
 const sections = document.querySelectorAll('section[id]');
 const navAnchors = document.querySelectorAll('.nav-links a[href^="#"]');
-const navLinksContainer = document.querySelector('.nav-links');
-
-// Create dragonfly element
-const libelle = document.createElement('img');
-libelle.src = document.querySelector('link[rel="stylesheet"]').href.replace('style.css', 'img/libellen-logo.png');
-libelle.className = 'nav-libelle';
-libelle.alt = '';
-navLinksContainer.style.position = 'relative';
-navLinksContainer.appendChild(libelle);
-
-function positionLibelle(activeLink) {
-    if (!activeLink) {
-        libelle.style.opacity = '0';
-        return;
-    }
-    const linkRect = activeLink.getBoundingClientRect();
-    const containerRect = navLinksContainer.getBoundingClientRect();
-    libelle.style.left = (linkRect.left - containerRect.left + linkRect.width / 2 - 10) + 'px';
-    libelle.style.top = (linkRect.bottom - containerRect.top + 2) + 'px';
-    libelle.style.opacity = '0.55';
-}
 
 function updateActiveNav() {
     const scrollY = window.scrollY + 100;
@@ -81,18 +60,12 @@ function updateActiveNav() {
         }
     });
 
-    let activeLink = null;
     navAnchors.forEach(a => {
-        const isActive = a.getAttribute('href') === '#' + current;
-        a.classList.toggle('active', isActive);
-        if (isActive) activeLink = a;
+        a.classList.toggle('active', a.getAttribute('href') === '#' + current);
     });
-
-    positionLibelle(activeLink);
 }
 
 window.addEventListener('scroll', updateActiveNav);
-window.addEventListener('resize', updateActiveNav);
 updateActiveNav();
 
 // Scroll-Animation
