@@ -199,13 +199,13 @@ img {
     position: absolute;
     inset: -10px;
     background: url('img/hero-bg.jpg') center/cover no-repeat;
-    animation: hero-breathe 8s ease-in-out infinite;
+    animation: hero-breathe 6s ease-in-out 2;
     will-change: transform;
 }
 
 @keyframes hero-breathe {
     0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.03); }
+    50% { transform: scale(1.05); }
 }
 
 @media (prefers-reduced-motion: reduce) {
