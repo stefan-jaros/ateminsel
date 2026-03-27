@@ -144,9 +144,9 @@ img {
     content: '';
     position: absolute;
     left: 50%;
-    bottom: -6px;
-    width: 14px;
-    height: 14px;
+    bottom: -8px;
+    width: 22px;
+    height: 22px;
     transform: translateX(-50%);
     background: url('img/libellen-logo.png') center/contain no-repeat;
     opacity: 0;
@@ -164,7 +164,7 @@ img {
 }
 
 .nav-links a.active::after {
-    opacity: 0.4;
+    opacity: 0.5;
 }
 
 .nav-toggle {
