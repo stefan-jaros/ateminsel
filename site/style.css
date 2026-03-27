@@ -875,7 +875,7 @@ img {
     padding-left: 16px;
     margin-left: 20px;
     padding-left: 20px;
-    border-left: 1.5px solid var(--text-muted);
+    border-left: 1px solid var(--text-muted);
 }
 
 .lang-btn {
