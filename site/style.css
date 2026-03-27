@@ -199,7 +199,7 @@ img {
     position: absolute;
     inset: -10px;
     background: url('img/hero-bg.jpg') center/cover no-repeat;
-    animation: hero-breathe 6s ease-in-out 1;
+    animation: none;
     will-change: transform;
 }
 
@@ -208,9 +208,15 @@ img {
     50% { transform: scale(1.05); }
 }
 
+.hero.animate::before {
+    animation: hero-breathe 6s ease-in-out 1;
+}
+
 @media (prefers-reduced-motion: reduce) {
-    .hero::before {
+    .hero.animate::before {
         animation: none;
+    }
+    .hero::before {
         inset: 0;
     }
 }

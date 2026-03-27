@@ -12,6 +12,16 @@ themeToggle.addEventListener('click', () => {
     location.reload();
 });
 
+// Hero breathing animation - on load and on logo click
+const hero = document.querySelector('.hero');
+hero.classList.add('animate');
+
+document.querySelector('.nav-logo').addEventListener('click', () => {
+    hero.classList.remove('animate');
+    void hero.offsetWidth;
+    hero.classList.add('animate');
+});
+
 // Mobile navigation toggle
 const toggle = document.querySelector('.nav-toggle');
 const links = document.querySelector('.nav-links');
