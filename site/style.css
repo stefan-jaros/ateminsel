@@ -96,7 +96,7 @@ img {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 64px;
+    height: 72px;
 }
 
 .nav-logo {
@@ -121,9 +121,9 @@ img {
 .nav-links {
     display: flex;
     list-style: none;
-    gap: 24px;
+    gap: 32px;
     margin-left: auto;
-    margin-right: 24px;
+    margin-right: 28px;
 }
 
 .lang-dropdown,
@@ -137,27 +137,25 @@ img {
     font-weight: 400;
     transition: color var(--transition);
     position: relative;
-    padding-bottom: 2px;
+    padding-bottom: 10px;
 }
 
 .nav-links a::after {
     content: '';
     position: absolute;
-    left: 0;
-    bottom: -2px;
-    width: 0;
-    height: 1.5px;
-    background: var(--accent);
-    border-radius: 1px;
-    transition: width 0.3s ease;
+    left: 50%;
+    bottom: -6px;
+    width: 14px;
+    height: 14px;
+    transform: translateX(-50%);
+    background: url('img/libellen-logo.png') center/contain no-repeat;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
 }
 
 .nav-links a:hover {
-    color: var(--text);
-}
-
-.nav-links a:hover::after {
-    width: 100%;
+    color: var(--accent);
 }
 
 .nav-links a.active {
@@ -166,9 +164,7 @@ img {
 }
 
 .nav-links a.active::after {
-    width: 100%;
-    background: var(--accent);
-    opacity: 0.5;
+    opacity: 0.4;
 }
 
 .nav-toggle {
@@ -980,7 +976,7 @@ img {
     .nav-links {
         display: none;
         position: absolute;
-        top: 64px;
+        top: 72px;
         left: 0;
         right: 0;
         background: var(--nav-bg);
