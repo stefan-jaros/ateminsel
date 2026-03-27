@@ -150,10 +150,10 @@ img {
 .nav-links a.active::before {
     content: '';
     display: inline-block;
-    width: 38px;
-    height: 38px;
+    width: 44px;
+    height: 44px;
     margin-right: 6px;
-    vertical-align: -10px;
+    vertical-align: -12px;
     background: url('img/libellen-logo.png') center/contain no-repeat;
     opacity: 1;
     filter: saturate(2.2) brightness(0.55);
