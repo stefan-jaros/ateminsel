@@ -191,8 +191,30 @@ img {
     display: flex;
     align-items: center;
     padding: 100px 24px 80px;
-    background: url('img/hero-bg.jpg') center/cover no-repeat;
     overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    inset: -10px;
+    background: url('img/hero-bg.jpg') center/cover no-repeat;
+    transform: scale(1.05);
+    will-change: transform;
+}
+
+@keyframes hero-settle {
+    0% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.hero.animate::before {
+    animation: hero-settle 5s ease-out 1 forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero.animate::before { animation: none; }
+    .hero::before { inset: 0; transform: none; }
 }
 
 
