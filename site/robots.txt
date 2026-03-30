@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /ateminsel/verwaltung-a9afda265c225645/
+Disallow: /ateminsel/statistik-d9f4b50c25a9c644/
+Disallow: /ateminsel/stats-data/
