@@ -1018,14 +1018,17 @@ html.hero-start-zoomed .hero::before {
 .legal h3 {
     font-size: 0.95rem;
     font-weight: 500;
-    margin-top: 32px;
-    margin-bottom: 8px;
+    margin-top: 36px;
+    margin-bottom: 10px;
+    padding-left: 14px;
+    border-left: 2px solid var(--accent);
 }
 
 .legal p {
     color: var(--text-muted);
     margin-bottom: 12px;
     font-size: 0.95rem;
+    max-width: 680px;
 }
 
 /* ── Language Dropdown ────────────────── */

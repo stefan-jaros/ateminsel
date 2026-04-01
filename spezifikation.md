@@ -11,7 +11,7 @@ Website-Redesign fuer ateminsel.ch (Regina Mutzner, Atemtherapie Middendorf).
   - Secrets: `FTP_HOST`, `FTP_USER`, `FTP_PASS`
 - **Domain**: www.jaroszewski.ch/ateminsel/ (Redirect ohne www → mit www)
 - **Status**: `noindex, nofollow` (Testphase)
-- **Cache-Buster**: `style.css?v=2` und `main.js?v=5` in allen HTML-Dateien
+- **Cache-Buster**: `style.css?v=10` und `main.js?v=9` in allen HTML-Dateien
   - Bei jeder CSS/JS-Aenderung hochzaehlen (iPad Safari cached aggressiv)
 
 ## Seitenstruktur (Onepager)
@@ -29,6 +29,15 @@ Alle Sprachen haben die gleiche Struktur:
 9. **Kontakt** – Formular + OpenStreetMap-Karte
 10. **Karte** – Vollbreite OpenStreetMap (nur DE, EN/FR/ES haben Karte im Kontakt-Bereich)
 11. **Footer** – Copyright + Impressum-Link
+
+### Impressum-Seite
+
+Eigene Seite pro Sprache (`*/impressum.html`):
+- **Navigation**: Anker-Links (Startseite, Impressum, Datenschutz) statt Hauptseiten-Links
+- **Sektion 1** (section-alt): Impressum (Kontakt, Handelsregister, Haftung, Copyright)
+- **Sektion 2** (normal bg): Datenschutz (Verantwortliche, Datenbearbeitung, Cookies, SSL, Drittdienste)
+- h3-Ueberschriften mit dezenter Akzent-Linie links
+- Textbreite auf 680px begrenzt
 
 ## Sprachen
 
@@ -96,6 +105,7 @@ site/
 ├── favicon.ico
 ├── apple-touch-icon.png
 ├── robots.txt
+├── sitemap.xml              # Alle 4 Sprachen mit hreflang
 ├── stats-data/             # Statistik-JSON pro Monat (wird vom Server erstellt)
 ├── verwaltung-a9afda265c225645/
 │   ├── index.html          # Admin-Panel fuer Kurse
@@ -104,6 +114,7 @@ site/
 │   └── index.html          # Statistik-Dashboard
 ├── img/
 │   ├── hero-bg.jpg
+│   ├── og-image.jpg          # 1200x630, aus hero-bg zugeschnitten
 │   ├── portraet.jpg
 │   ├── regina-foto.jpg
 │   ├── kontakt-bg.jpg
@@ -154,8 +165,21 @@ Besucherstatistik ohne externe Dienste (kein Google Analytics, kein Cookie-Banne
 - Zeigt Scroll-Tiefe: wie viele Besucher sehen welche Sektion
 - Keine Cookies, keine personenbezogenen Daten
 
+## SEO (vorbereitet, noch noindex)
+
+Alles ist bereit. Zum Live-Schalten nur `noindex, nofollow` aus den 4 index.html entfernen.
+
+- **Open Graph Tags**: og:title, og:description, og:image, og:url, og:locale (alle 4 Sprachen)
+- **OG-Image**: `img/og-image.jpg` (1200x630, aus Hero-Bild zugeschnitten)
+- **Canonical URLs**: je Sprache
+- **Hreflang Tags**: de, en, fr, es + x-default → de
+- **Sitemap.xml**: alle 4 Sprachen mit hreflang, in robots.txt verlinkt
+- **JSON-LD**: HealthAndBeautyBusiness mit Adresse, Oeffnungszeiten, Telefon, E-Mail
+- **Alt-Texte**: alle Bilder haben Alt-Attribute
+
 ### Weitere offene Punkte
 - [ ] Texte aller Sektionen nochmal durchgehen
 - [ ] E-Mail-Empfaenger auf Regina umstellen
 - [ ] `noindex` entfernen wenn Seite live geht
 - [ ] Domain ateminsel.ch konfigurieren
+- [ ] Google Business Profil beanspruchen (muss Regina selbst verifizieren)
