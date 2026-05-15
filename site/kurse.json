@@ -1,0 +1,13 @@
+[
+  {
+    "titel": "Atem- und Achtsamkeitskurs",
+    "tag": "Freitags",
+    "uhrzeit": "9:00 - 10:00 Uhr",
+    "start": "16. Januar 2026",
+    "ende": "20. März 2026",
+    "lektionen": 10,
+    "ort": "Luzernerstrasse 19<br>5712 Beinwil am See",
+    "kosten": "CHF 300.-",
+    "plaetze_frei": true
+  }
+]

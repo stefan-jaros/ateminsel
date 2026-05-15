@@ -1,0 +1,30 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "if": "Bash(git commit*)",
+            "command": "echo '{\"hookSpecificOutput\": {\"hookEventName\": \"PostToolUse\", \"additionalContext\": \"ERINNERUNG: Frage den Benutzer aktiv ob die Aenderungen auf GitHub veroeffentlicht werden sollen. Sage: Soll ich die Aenderungen auf GitHub veroeffentlichen? Dann ist die Seite in ca. 1 Minute live.\"}}'",
+            "timeout": 5,
+            "statusMessage": "Pruefe ob Push noetig..."
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "COMMITS=$(git log --oneline --since='6 hours ago' 2>/dev/null | wc -l | tr -d ' '); if [ \"$COMMITS\" -gt 1 ]; then echo \"{\\\"systemMessage\\\": \\\"Erinnerung: Es gibt $COMMITS Commits von heute. Frage den Benutzer ob die heutigen Aenderungen zusammengefasst werden sollen.\\\"}\"; fi",
+            "timeout": 5,
+            "statusMessage": "Pruefe Tages-Commits..."
+          }
+        ]
+      }
+    ]
+  }
+}

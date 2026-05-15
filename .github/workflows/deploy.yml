@@ -1,0 +1,27 @@
+name: Deploy to FTP
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'site/**'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy via SFTP
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.6
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASS }}
+          port: 5544
+          local_path: './site/*'
+          remote_path: '/ateminsel.ch/public_html/test/ateminsel'
+          sftp_only: true
+          sftpArgs: '-o ConnectTimeout=30 -o StrictHostKeyChecking=no -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedAlgorithms=+ssh-rsa'

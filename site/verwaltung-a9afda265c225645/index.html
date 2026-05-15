@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Ateminsel – Kursverwaltung</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; color: #333; line-height: 1.6; padding: 24px; }
+        .container { max-width: 700px; margin: 0 auto; }
+        h1 { font-size: 1.5rem; font-weight: 600; margin-bottom: 8px; color: #006d8a; }
+        .subtitle { color: #888; font-size: 0.9rem; margin-bottom: 32px; }
+        .btn { display: inline-block; padding: 10px 20px; border: none; border-radius: 8px; font-size: 0.9rem; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+        .btn-primary { background: #006d8a; color: #fff; }
+        .btn-primary:hover { background: #005a72; }
+        .btn-danger { background: #fff; color: #c62828; border: 1px solid #c62828; }
+        .btn-danger:hover { background: #c62828; color: #fff; }
+        .btn-secondary { background: #fff; color: #006d8a; border: 1px solid #006d8a; }
+        .btn-secondary:hover { background: #006d8a; color: #fff; }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .btn-small { padding: 6px 14px; font-size: 0.82rem; }
+        .kurs { background: #fff; border-radius: 12px; padding: 24px; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border-left: 3px solid #006d8a; }
+        .kurs-nr { font-size: 0.75rem; color: #888; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px; }
+        .kurs-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+        .kurs-row-full { margin-bottom: 12px; }
+        label { display: block; font-size: 0.8rem; font-weight: 500; color: #555; margin-bottom: 4px; }
+        input[type="text"], input[type="number"] { width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 0.9rem; font-family: inherit; }
+        input:focus { outline: none; border-color: #006d8a; }
+        .checkbox-row { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+        .checkbox-row input[type="checkbox"] { width: 18px; height: 18px; accent-color: #006d8a; }
+        .checkbox-row label { margin-bottom: 0; font-size: 0.9rem; }
+        .kurs-actions { display: flex; justify-content: flex-end; margin-top: 16px; }
+        .status { padding: 12px 16px; border-radius: 8px; margin-bottom: 20px; font-size: 0.9rem; display: none; }
+        .status-ok { background: #e8f5e9; color: #2e7d32; }
+        .status-error { background: #fce4ec; color: #c62828; }
+        .empty { text-align: center; color: #888; padding: 40px; font-style: italic; }
+        .hinweis { font-size: 0.8rem; color: #888; margin-top: 4px; }
+        @media (max-width: 600px) {
+            .kurs-row { grid-template-columns: 1fr; }
+            body { padding: 16px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Kursverwaltung</h1>
+    <p class="subtitle">Kurse erfassen, bearbeiten und veroeffentlichen</p>
+
+    <div class="status" id="status"></div>
+    <div id="kurse-liste"></div>
+    <div style="margin-top: 20px; display: flex; gap: 12px;">
+        <button class="btn btn-secondary" id="btn-neu" onclick="kursHinzufuegen()">+ Neuen Kurs</button>
+        <button class="btn btn-primary" onclick="speichern()">Speichern</button>
+    </div>
+    <p class="hinweis">Maximal 3 Kurse. Aenderungen werden erst nach "Speichern" veroeffentlicht.</p>
+</div>
+
+<script>
+const API = 'api.php';
+let kurse = [];
+
+// Direkt laden
+fetch(API)
+    .then(r => r.json())
+    .then(data => {
+        kurse = data.kurse || [];
+        rendern();
+    })
+    .catch(() => rendern());
+
+function rendern() {
+    const liste = document.getElementById('kurse-liste');
+    const btnNeu = document.getElementById('btn-neu');
+
+    if (kurse.length === 0) {
+        liste.innerHTML = '<p class="empty">Keine Kurse erfasst. Klicke auf "+ Neuen Kurs" um einen zu erstellen.</p>';
+    } else {
+        liste.innerHTML = kurse.map((k, i) => `
+            <div class="kurs">
+                <div class="kurs-nr">Kurs ${i + 1} von maximal 3</div>
+                <div class="kurs-row-full">
+                    <label>Kurstitel</label>
+                    <input type="text" value="${esc(k.titel)}" onchange="kurse[${i}].titel=this.value" placeholder="z.B. Atem- und Achtsamkeitskurs">
+                </div>
+                <div class="kurs-row">
+                    <div>
+                        <label>Wochentag</label>
+                        <input type="text" value="${esc(k.tag)}" onchange="kurse[${i}].tag=this.value" placeholder="z.B. Freitags">
+                    </div>
+                    <div>
+                        <label>Uhrzeit</label>
+                        <input type="text" value="${esc(k.uhrzeit)}" onchange="kurse[${i}].uhrzeit=this.value" placeholder="z.B. 9:00 - 10:00 Uhr">
+                    </div>
+                </div>
+                <div class="kurs-row">
+                    <div>
+                        <label>Startdatum</label>
+                        <input type="text" value="${esc(k.start)}" onchange="kurse[${i}].start=this.value" placeholder="z.B. 16. Januar 2026">
+                    </div>
+                    <div>
+                        <label>Enddatum</label>
+                        <input type="text" value="${esc(k.ende)}" onchange="kurse[${i}].ende=this.value" placeholder="z.B. 20. Maerz 2026">
+                    </div>
+                </div>
+                <div class="kurs-row">
+                    <div>
+                        <label>Anzahl Lektionen</label>
+                        <input type="number" value="${k.lektionen}" min="1" max="52" onchange="kurse[${i}].lektionen=parseInt(this.value)">
+                    </div>
+                    <div>
+                        <label>Kosten</label>
+                        <input type="text" value="${esc(k.kosten)}" onchange="kurse[${i}].kosten=this.value" placeholder="z.B. CHF 300.-">
+                    </div>
+                </div>
+                <div class="kurs-row-full">
+                    <label>Ort (mit &lt;br&gt; fuer Zeilenumbruch)</label>
+                    <input type="text" value="${esc(k.ort)}" onchange="kurse[${i}].ort=this.value" placeholder="z.B. Luzernerstrasse 19&lt;br&gt;5712 Beinwil am See">
+                </div>
+                <div class="checkbox-row">
+                    <input type="checkbox" id="frei-${i}" ${k.plaetze_frei ? 'checked' : ''} onchange="kurse[${i}].plaetze_frei=this.checked">
+                    <label for="frei-${i}">Plaetze frei</label>
+                </div>
+                <div class="kurs-actions">
+                    <button class="btn btn-danger btn-small" onclick="kursLoeschen(${i})">Loeschen</button>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    btnNeu.disabled = kurse.length >= 3;
+}
+
+function esc(str) {
+    return (str || '').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function kursHinzufuegen() {
+    if (kurse.length >= 3) return;
+    kurse.push({
+        titel: '',
+        tag: '',
+        uhrzeit: '',
+        start: '',
+        ende: '',
+        lektionen: 10,
+        ort: '',
+        kosten: '',
+        plaetze_frei: true
+    });
+    rendern();
+}
+
+function kursLoeschen(index) {
+    if (confirm('Kurs wirklich loeschen?')) {
+        kurse.splice(index, 1);
+        rendern();
+    }
+}
+
+function speichern() {
+    const body = new FormData();
+    body.append('action', 'speichern');
+    body.append('kurse', JSON.stringify(kurse));
+
+    fetch(API, { method: 'POST', body })
+        .then(r => r.json())
+        .then(data => {
+            const el = document.getElementById('status');
+            if (data.ok) {
+                kurse = data.kurse;
+                rendern();
+                el.textContent = 'Gespeichert! Aenderungen sind jetzt auf der Webseite sichtbar.';
+                el.className = 'status status-ok';
+            } else {
+                el.textContent = data.fehler || 'Fehler beim Speichern';
+                el.className = 'status status-error';
+            }
+            el.style.display = 'block';
+            setTimeout(() => el.style.display = 'none', 5000);
+        })
+        .catch(() => {
+            const el = document.getElementById('status');
+            el.textContent = 'Verbindungsfehler. Bitte erneut versuchen.';
+            el.className = 'status status-error';
+            el.style.display = 'block';
+        });
+}
+</script>
+
+</body>
+</html>
