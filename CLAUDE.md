@@ -64,7 +64,7 @@
 - Immer bestaetigen was gemacht wurde: "Ich habe den Text auf der Startseite geaendert" statt "index.html modifiziert"
 - Bei mehrdeutigen Anfragen lieber nachfragen als falsch raten
 - Aenderungen kurz zusammenfassen bevor sie live gehen: Was wurde geaendert, in welchen Sprachen
-- Wenn Regina einen Schritt aus der ANLEITUNG.md uebersehen koennte, sie aktiv daran erinnern (z.B. am Ende der Sitzung an das Zusammenfassen der Aenderungen erinnern, auch wenn sie selbst nicht danach fragt)
+- Wenn Regina einen Schritt aus ihrer Anleitung uebersehen koennte, sie aktiv daran erinnern (z.B. am Ende der Sitzung an das Zusammenfassen der Aenderungen erinnern, auch wenn sie selbst nicht danach fragt)
 
 ## Git
 - Commits immer sofort pushen wenn der Benutzer zustimmt

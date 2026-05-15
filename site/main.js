@@ -197,3 +197,14 @@ window.addEventListener('beforeunload', function() {
         sektionen: Array.from(gesehen)
     }));
 });
+
+// Map iframe verzoegert laden, sobald Layout sicher steht.
+// Verhindert dass OpenStreetMap fuer eine zu schmale Breite rendert
+// (Race zwischen iframe-Load und CSS-Layout).
+window.addEventListener('load', function() {
+    setTimeout(function() {
+        document.querySelectorAll('iframe[data-src]').forEach(function(f) {
+            f.src = f.dataset.src;
+        });
+    }, 800);
+});
